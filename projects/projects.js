@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
       return res.status(200).json(projects);
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error retrieving projects data" });
+    next(err);
   }
 });
 
@@ -21,7 +21,7 @@ router.get("/:id", validateProjectId(), (req, res) => {
       res.status(200).json(project);
     });
   } catch (err) {
-    res.status(500).json({ message: "Error getting project" });
+    next(err);
   }
 });
 
@@ -36,7 +36,7 @@ router.post("/", validateProject(), (req, res) => {
       return res.status(201).json(project);
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error creating new project" });
+    next(err);
   }
 });
 
@@ -51,7 +51,7 @@ router.put("/:id", validateProjectId(), validateProject(), (req, res) => {
       return res.status(202).json(project);
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error updating project" });
+    next(err);
   }
 });
 
@@ -61,7 +61,7 @@ router.delete("/:id", validateProjectId(), (req, res) => {
       return res.status(200).json({ project: req.project });
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error deleting project" });
+    next(err);
   }
 });
 

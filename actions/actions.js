@@ -4,6 +4,7 @@ const router = express.Router();
 const actionModel = require("../data/helpers/actionModel");
 const { validateActionId } = require("../middleware/validateActionId");
 const { validateAction } = require("../middleware/validateAction");
+const { orWhereNotExists } = require("../data/dbConfig");
 
 router.get("/", (req, res) => {
   try {
@@ -29,7 +30,7 @@ router.post("/", validateAction(), (req, res) => {
       return res.status(201).json(action);
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error creating action" });
+    next(err);
   }
 });
 
@@ -46,7 +47,7 @@ router.put("/:id", validateActionId(), validateAction(), (req, res) => {
       return res.status(200).json(action);
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error updating action" });
+    next(err);
   }
 });
 
@@ -56,7 +57,7 @@ router.delete("/:id", validateActionId(), (req, res) => {
       return res.status(200).json({ action });
     });
   } catch (err) {
-    return res.status(500).json({ message: "Error deleting action" });
+    next(err);
   }
 });
 
