@@ -6,7 +6,7 @@ function validateProject() {
       errorMessage = "Project data is missing";
     } else if (!req.body.name) {
       errorMessage = "Project name is missing";
-    } else if (req.body.description) {
+    } else if (!req.body.description) {
       errorMessage = "Project description is missing";
     }
 

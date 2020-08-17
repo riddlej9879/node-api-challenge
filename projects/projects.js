@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const projectModel = require("../data/helpers/projectModel");
-const validateProjectId = require("../middleware/validateProjectId");
-const validateProject = require("../middleware/validateProject");
+const { validateProjectId } = require("../middleware/validateProjectId");
+const { validateProject } = require("../middleware/validateProject");
 
 router.get("/", (req, res) => {
   try {
@@ -16,7 +16,13 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", validateProjectId(), (req, res) => {
-  res.status(200).json(req.projects);
+  try {
+    projectModel.get(req.params.id).then((project) => {
+      res.status(200).json(project);
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error getting project" });
+  }
 });
 
 router.post("/", validateProject(), (req, res) => {
@@ -51,8 +57,8 @@ router.put("/:id", validateProjectId(), validateProject(), (req, res) => {
 
 router.delete("/:id", validateProjectId(), (req, res) => {
   try {
-    projectModel.remove(req.params.id).then((project) => {
-      return res.status(200).json({ project });
+    projectModel.remove(req.params.id).then(() => {
+      return res.status(200).json({ project: req.project });
     });
   } catch (err) {
     return res.status(500).json({ message: "Error deleting project" });

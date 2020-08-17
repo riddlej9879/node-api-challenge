@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const actionModel = require("../data/helpers/actionModel");
-const validateActionId = require("../middleware/validateActionId");
-const validateAction = require("../middleware/validateAction");
+const { validateActionId } = require("../middleware/validateActionId");
+const { validateAction } = require("../middleware/validateAction");
 
 router.get("/", (req, res) => {
   try {

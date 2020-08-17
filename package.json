@@ -4,6 +4,7 @@
   "description": "Node API Challenge",
   "main": "index.js",
   "scripts": {
+    "watch": "nodemon --require dotenv/config index.js",
     "db:seed": "knex seed:run",
     "server": "nodemon index.js",
     "start": "node index.js"
